@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-confusing-arrow */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -17,6 +17,10 @@ import {
   Picture,
   Profile,
   Dropdown,
+  Search,
+  SearchIcon,
+  SearchInput,
+  PlayButton,
 } from './styles/header';
 
 const Header = ({ children, bg = true, ...restProps }) =>
@@ -42,6 +46,29 @@ Header.TextLink = function HeaderTextLink({ children, ...restProps }) {
   return <TextLink {...restProps}> {children}</TextLink>;
 };
 
+Header.Search = function HeaderSearch({
+  searchTerm,
+  setSearchTerm,
+  children,
+  ...restProps
+}) {
+  const [searchActive, setsearchActive] = useState(false);
+
+  return (
+    <Search {...restProps}>
+      <SearchIcon onClick={() => setsearchActive((prevState) => !prevState)}>
+        <img src="images/icons/search.png" alt="search" />
+      </SearchIcon>
+      <SearchInput
+        value={searchTerm}
+        onChange={({ target }) => setSearchTerm(target.value)}
+        placeholder="Search films and series"
+        active={searchActive}
+      />
+    </Search>
+  );
+};
+
 Header.Profile = function HeaderProfile({ children, ...restProps }) {
   return <Profile {...restProps}> {children}</Profile>;
 };
@@ -64,6 +91,10 @@ Header.Logo = function HeaderLogo({ to, ...restProps }) {
 
 Header.Picture = function HeaderPicture({ src, ...restProps }) {
   return <Picture {...restProps} src={`/images/users/${src}.png`} />;
+};
+
+Header.PlayButton = function HeaderPlayButton({ children, ...restProps }) {
+  return <PlayButton {...restProps}>{children}</PlayButton>;
 };
 
 Header.ButtonLink = function HeaderButtonLink({ to, children, ...restProps }) {
