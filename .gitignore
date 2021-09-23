@@ -11,6 +11,7 @@
 # production
 /build
 firebase.prod.js
+lib
 
 # misc
 .DS_Store
