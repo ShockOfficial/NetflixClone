@@ -17,7 +17,7 @@ export default function Player({ children, ...restProps }) {
   );
 }
 
-Player.Video = function PlayerVideo({ src, ...restProps }) {
+Player.Video = function PlayerVideo({ myOwn = false, src, ...restProps }) {
   const { showPlayer, setShowPlayer } = useContext(PlayerContext);
 
   return showPlayer
@@ -27,12 +27,26 @@ Player.Video = function PlayerVideo({ src, ...restProps }) {
           onClick={() => setShowPlayer(false)}
           data-testid="player"
         >
-          <Inner>
-            <video id="netflix-player" controls>
-              <source src={src} type="video/mp4" />
-            </video>
-            <Close />
-          </Inner>
+          {myOwn ? (
+            <Inner>
+              <iframe
+                width="944"
+                height="540"
+                src="https://www.youtube.com/embed/TLlpo0r2ld4"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </Inner>
+          ) : (
+            <Inner>
+              <video id="netflix-player" controls>
+                <source src={src} type="video/mp4" />
+              </video>
+              <Close />
+            </Inner>
+          )}
         </Overlay>,
         document.body
       )

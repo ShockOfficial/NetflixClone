@@ -18,6 +18,16 @@ export const BrowseContainer = ({ slides }) => {
   const { firebase } = useContext(FirebaseContext);
   const user = firebase.auth().currentUser || {};
 
+  const myOwnVidoItem = {
+    description:
+      "That's my own video on which I am playing the bass. The famoust songs by Wojciech Pilichowski.",
+    genre: 'cover',
+    maturity: '3',
+    slug: 'bass',
+    title: 'Bass cover',
+    myVideo: true,
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -97,6 +107,28 @@ export const BrowseContainer = ({ slides }) => {
       </Header>
 
       <Card.Group>
+        <Card>
+          <Card.Title>My Own Video</Card.Title>
+          <Card.Entities>
+            <Card.Item key="my_own_vide_bass_cover-1" item={myOwnVidoItem}>
+              <Card.Image src="/images/films/myOwn/cover/bas/small.jpg" />
+              <Card.Meta>
+                <Card.SubTitle>Playing Bass</Card.SubTitle>
+                <Card.Text>
+                  The video on which I'm playing the best bass lines from polish
+                  bass lagend Wojciech Pilichowski.
+                </Card.Text>
+              </Card.Meta>
+            </Card.Item>
+          </Card.Entities>
+          <Card.Feature>
+            <Player>
+              <Player.Button />
+              <Player.Video myOwn />
+            </Player>
+          </Card.Feature>
+        </Card>
+
         {slideRows.map((slideItem) => (
           <Card key={`${category}-${slideItem.title.toLowerCase()}`}>
             <Card.Title>{slideItem.title}</Card.Title>
